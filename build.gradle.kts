@@ -24,6 +24,7 @@ dependencies {
 	implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testImplementation("com.github.tomakehurst:wiremock-jre8:2.33.2")
 }
 
 dependencyManagement {
