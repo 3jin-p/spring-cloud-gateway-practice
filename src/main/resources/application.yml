@@ -12,15 +12,21 @@ spring:
   application:
     name: gateway-service
 
-#  cloud:
-#    gateway:
-#      routes:
-#        - id: second-service
-#          uri: http://localhost:8082/
-#          predicates:
-#            - Path=/second-service/**
-#        - id: first-service
-#          uri: http://localhost:8081/
-#          predicates:
-#            - Path=/first-service/**    -> Java Source 로 라우팅 FilterConfig class
+  cloud:
+    gateway:
+      routes:
+        - id: first-service
+          uri: http://localhost:8081/
+          predicates:
+            - Path=/first-service/**
+          filters:
+            - AddRequestHeader=first-request, first-requests-header2
+            - AddResponseHeader=first-response, first-response-header2
+        - id: second-service
+          uri: http://localhost:8082/
+          predicates:
+            - Path=/second-service/**
+          filters:
+            - AddRequestHeader=second-request, second-requests-header2
+            - AddResponseHeader=second-response, second-response-header2
 
