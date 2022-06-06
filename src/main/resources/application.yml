@@ -3,14 +3,14 @@ server:
 
 eureka:
   client:
-    register-with-eureka: false
-    fetch-registry: false
+    register-with-eureka: true
+    fetch-registry: true
     service-url:
       defaultZone: http://localhost:8761/eureka
 
 spring:
   application:
-    name: gateway-service
+    name: API-GATEWAY-SERVICE
 
   cloud:
     gateway:
@@ -23,7 +23,8 @@ spring:
 
       routes:
         - id: first-service
-          uri: http://localhost:8081/
+#          uri: http://localhost:8081/
+          uri: lb://MY-FIRST-SERVICE # discovery 에서 찾아서 포워딩
           predicates:
             - Path=/first-service/**
           filters:
@@ -31,11 +32,17 @@ spring:
 #            - AddResponseHeader=first-response, first-response-header2
              - CustomFilter
         - id: second-service
-          uri: http://localhost:8082/
+#          uri: http://localhost:8082/
+          uri: lb://MY-SERCOND-SERVICE
           predicates:
             - Path=/second-service/**
           filters:
-            - AddRequestHeader=second-request, second-requests-header2
-            - AddResponseHeader=second-response, second-response-header2
+#            - AddRequestHeader=second-request, second-requests-header2
+#            - AddResponseHeader=second-response, second-response-header2
+            - name: LoggingFilter
+              args:
+                baseMessage: Hi, there
+                preLogger: true
+                postLogger: true
 
 
