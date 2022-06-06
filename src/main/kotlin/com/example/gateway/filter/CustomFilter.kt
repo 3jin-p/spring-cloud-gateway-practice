@@ -18,7 +18,7 @@ class CustomFilter(): AbstractGatewayFilterFactory<CustomFilter.Config>(Config::
             val request: ServerHttpRequest = exchange.request
             val response: ServerHttpResponse = exchange.response
 
-            println("Custom PRE filter: request uri -> $request.id")
+            println("Custom PRE filter: request uri -> $request.id ")
 
             return@GatewayFilter chain.filter(exchange).then(Mono.fromRunnable {
                 println("Custom POST filter: response code -> $response.statusCode")
